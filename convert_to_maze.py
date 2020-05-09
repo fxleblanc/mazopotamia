@@ -2,6 +2,7 @@ import base64
 import io
 from PIL import Image
 import numpy as np
+import sys
 
 def arrow_symbol(block):
     diff_num_black_pixels = np.apply_along_axis(lambda x: np.bincount(x)[0], 1, block)
@@ -65,9 +66,11 @@ def convert_to_maze(data):
 
 
 if __name__ == "__main__":
-    with open('test_encoded_maze.txt') as encoded_maze_file:
+    filename = sys.argv[1]
+    with open(filename) as encoded_maze_file:
         encoded_maze = encoded_maze_file.read().replace('\n', '')
         decoded_maze = base64.b64decode(encoded_maze)
         image = Image.open(io.BytesIO(decoded_maze)).convert('L')
         data = np.asarray(image)
         maze = convert_to_maze(data)
+        print(maze)
