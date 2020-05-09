@@ -3,6 +3,7 @@ import io
 from PIL import Image
 import numpy as np
 import sys
+import os
 
 def arrow_symbol(block):
     """
@@ -84,3 +85,4 @@ if __name__ == "__main__":
         data = np.asarray(image)
         maze = convert_to_maze(data)
         print(maze)
+        np.save(os.path.splitext(filename)[0] + '_decoded', maze)
